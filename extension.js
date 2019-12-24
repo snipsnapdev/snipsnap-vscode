@@ -1,5 +1,4 @@
-const fs = require('fs');
-
+// vscode api
 const vscode = require('vscode');
 
 const testData = {
@@ -46,8 +45,13 @@ function activate(context) {
           ];
           fakeReq(queryArr)
             .then(res => {
-              const fPath = vscode.Uri.file('/.vscode/snipsnap.code-snippets');
-              vscode.workspace.fs.writeFile(fPath, Buffer.from(res, 'utf8'));
+              // constructing absolute path for out future file
+              const wPath = vscode.Uri.file(
+                vscode.workspace.workspaceFolders[0].uri.fsPath +
+                  '/.vscode/snipsnap.code-snippets'
+              );
+              // writing our response to the code-snippets file
+              vscode.workspace.fs.writeFile(wPath, Buffer.from(res, 'utf8'));
             })
             .catch(err => console.log(err));
         });
