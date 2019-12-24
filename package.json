@@ -8,17 +8,19 @@
     "vscode": "^1.41.0"
   },
   "categories": [
-    "Other"
+    "Snippets"
   ],
   "activationEvents": [
-    "onCommand:extension.snap"
+    "onCommand:extension.snap",
+    "workspaceContains:package.json"
   ],
   "main": "./extension.js",
   "contributes": {
     "commands": [
       {
         "command": "extension.snap",
-        "title": "Snap"
+        "title": "Fetch the snippets",
+        "category": "Snipsnap"
       }
     ]
   },
