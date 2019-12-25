@@ -11,14 +11,14 @@
     "Snippets"
   ],
   "activationEvents": [
-    "onCommand:extension.snap",
+    "onCommand:extension.snipsnap_activate",
     "workspaceContains:package.json"
   ],
   "main": "./extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "extension.snap",
+        "command": "extension.snipsnap_activate",
         "title": "Fetch the snippets",
         "category": "Snipsnap"
       }
