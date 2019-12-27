@@ -22,7 +22,7 @@ steps:
         from_secret: azure_token
     commands:
       - npm install
-      - npx vsce publish
+      - npx vsce publish -p $(VSCODE_MARKETPLACE_TOKEN)
     # when:
     #   branch: master
     #   event: push
