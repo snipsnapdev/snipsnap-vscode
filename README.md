@@ -36,11 +36,11 @@
 </p>
 
 <p align="center">
-  <a href="https://marketplace.visualstudio.com/">
-    <img alt="VS Code Marketplace" src="https://img.shields.io/visual-studio-marketplace/v/snipsnap-vscode"></a>
-  <a href="https://marketplace.visualstudio.com/">
-    <img alt="VS Code Marketplace Downloads" src="https://img.shields.io/visual-studio-marketplace/d/snipsnap-vscode"></a>
-  <a href="https://marketplace.visualstudio.com/items?itemName=snipsnap-vscode">
+  <a href="https://marketplace.visualstudio.com/items?itemName=snipsnapdev.snipsnap-vscode">
+    <img alt="VS Code Marketplace" src="https://img.shields.io/visual-studio-marketplace/v/snipsnapdev.snipsnap-vscode"></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=snipsnapdev.snipsnap-vscode">
+    <img alt="VS Code Marketplace Downloads" src="https://img.shields.io/visual-studio-marketplace/d/snipsnapdev.snipsnap-vscode"></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=snipsnapdev.snipsnap-vscode">
     <img alt="VS Code Marketplace Installs" src="https://img.shields.io/visual-studio-marketplace/i/snipsnap-vscode"></a>
 </p>
 
