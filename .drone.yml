@@ -10,11 +10,11 @@ steps:
   #     template: >
   #       Repository: *{{repo.name}}*. Status: *Running*. Author: *{{build.author}}*. Build: *#{{build.number}}*. Branch: *{{build.branch}}*. Event: *{{build.event}}*. Logs: {{build.link}}
 
-  - name: test
-    image: node:12.14.0-alpine3.11
+  # - name: test
+  #   image: node:12.14.0-alpine3.11
+  #   commands:
+  #     - npm install
 
-    commands:
-      - npm install
   - name: publish
     image: node:12.14.0-alpine3.11
     environment:
@@ -22,7 +22,7 @@ steps:
         from_secret: azure_token
     commands:
       - npm install
-      - npx vsce publish -p $(VSCODE_MARKETPLACE_TOKEN)
+      - npx vsce publish -p ${VSCODE_MARKETPLACE_TOKEN}
     # when:
     #   branch: master
     #   event: push
