@@ -1,6 +1,6 @@
 {
   "name": "snipsnap-vscode",
-  "displayName": "VSCode - Ultimate Snippet Handler",
+  "displayName": "Snipsnap - Ultimate Snippet Handler",
   "description": "Code faster with snippets for your favourite libraries",
   "version": "0.0.2",
   "publisher": "snipsnapdev",
