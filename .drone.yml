@@ -22,7 +22,7 @@ steps:
         from_secret: azure_token
     commands:
       - npm install
-      - npm run publish
+      # - npm run publish
     # when:
     #   branch: master
     #   event: push
