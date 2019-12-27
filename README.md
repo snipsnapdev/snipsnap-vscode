@@ -36,6 +36,7 @@
 </p>
 
 <p align="center">
+  <a href="https://drone.pixelpoint.io/snipsnapdev/snipsnap-vscode"><img src="https://drone.pixelpoint.io/api/badges/snipsnapdev/snipsnap-vscode/status.svg" /></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=snipsnapdev.snipsnap-vscode">
     <img alt="VS Code Marketplace" src="https://img.shields.io/visual-studio-marketplace/v/snipsnapdev.snipsnap-vscode"></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=snipsnapdev.snipsnap-vscode">
