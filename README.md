@@ -1,4 +1,4 @@
-# Snipsnap snippet handler for Visual Studio Code
+# Snipsnap - ultimate snippet handler for Visual Studio Code
 
 [Snipsnap](https://snipsnap.dev/) is unopionated ultimate snippet handler that automatically exposes to you all available snippets for every library you are using in your project. Spend your time building great things, not orchestrating snippet extensions.
 
