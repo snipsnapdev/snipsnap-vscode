@@ -21,7 +21,6 @@ steps:
       VSCODE_MARKETPLACE_TOKEN:
         from_secret: azure_token
     commands:
-      - npm install
       - npx vsce publish -p $(echo $VSCODE_MARKETPLACE_TOKEN)
     when:
       event: tag
