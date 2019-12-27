@@ -1,7 +1,7 @@
-const getWorkspaceFile = require('./getWorkspaceFile')
+const getWorkspaceFile = require('./getWorkspaceFile');
 
 const utils = {
   getWorkspaceFile,
-}
+};
 
-module.exports = utils
+module.exports = utils;
