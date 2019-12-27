@@ -1,65 +1,89 @@
-# snipsnap README
+# Snipsnap snippet handler for Visual Studio Code
 
-This is the README for your extension "snipsnap". After writing up a brief description, we recommend including the following sections.
+[Snipsnap](https://snipsnap.dev/) is unopionated ultimate snippet handler that automatically exposes to you all available snippets for every library you are using in your project. Spend your time building great things, not orchestrating snippet extensions.
 
-## Features
+<p align="center">
+  <em>
+    JavaScript
+    · Python
+    · PHP 
+    · Go 
+    · Java 
+  </em>
+  <br />
+  <em>
+    Node
+    · Flask 
+    · Spring 
+  </em>
+  <br />
+  <em>
+    HTML
+    · Vue
+    · React
+    · Rails
+  </em>
+  <br />
+  <em>
+   <strong>Literally any library in any programming language</strong> 
+  </em>
+  <br />
+  <em>
+    <a href="https://snipsnap.dev/add">
+      Would like to see a particular library?
+    </a>
+  </em>
+</p>
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+<p align="center">
+  <a href="https://marketplace.visualstudio.com/">
+    <img alt="VS Code Marketplace" src="https://img.shields.io/visual-studio-marketplace/v/snipsnap-vscode"></a>
+  <a href="https://marketplace.visualstudio.com/">
+    <img alt="VS Code Marketplace Downloads" src="https://img.shields.io/visual-studio-marketplace/d/snipsnap-vscode"></a>
+  <a href="https://marketplace.visualstudio.com/items?itemName=snipsnap-vscode">
+    <img alt="VS Code Marketplace Installs" src="https://img.shields.io/visual-studio-marketplace/i/snipsnap-vscode"></a>
+</p>
 
-For example if there is an image subfolder under your extension project workspace:
+## Installation
 
-\!\[feature X\]\(images/feature-x.png\)
+Install through VS Code extensions. Search for `Snipsnap - Snippets Handler`
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+[Visual Studio Code Market Place: Snipsnap - snippets handler](https://marketplace.visualstudio.com/items?itemName=snippsnap-vscode)
 
-## Requirements
+Can also be installed in VS Code: Launch VS Code Quick Open (Ctrl+P), paste the following command, and press enter.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+```
+ext install snipsnap-vscode
+```
 
-## Extension Settings
+## Configuration
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+No config required and more than that - no config even exists! You are good to go right after installing the extension.
 
-For example:
+## Usage
 
-This extension contributes the following settings:
+### Using Command Palette (CMD/CTRL + Shift + P)
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+No manual activation required as well, the extension triggers if your workspace folder contains `package.json` file and does magic on its own, but if you absolutely do, use
 
-## Known Issues
+```
+CMD + Shift + P -> Fetch the snippets
+```
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+## Settings
 
-## Release Notes
+Again, none exists.
 
-Users appreciate release notes as you update your extension.
+## Error Messages
 
-### 1.0.0
+Reload using Command Paletter or just reload the window. If the problem hasn't dissapeared, please, [submit an issue with a description](https://github.com/snipsnap/snipsnap-vscode/issues).
 
-Initial release of ...
+## Telemetry
 
-### 1.0.1
+This extension respects the VS Code telemetry setting so if you have telemetry disabled in VS Code we will also not collect telemetry. See the [Visual Studio Code docs](https://code.visualstudio.com/docs/getstarted/telemetry#_disable-telemetry-reporting) for information on how to disable telemetry.
 
-Fixed issue #.
+However, at this point 0 telemetry data is being gathered if you did not tweaked vscode telemetry settings.
 
-### 1.1.0
+## License
 
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+MIT
