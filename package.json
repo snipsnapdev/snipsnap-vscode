@@ -2,7 +2,7 @@
   "name": "snipsnap-vscode",
   "displayName": "Snipsnap - Ultimate Snippet Handler",
   "description": "Code faster with snippets for your favourite libraries",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "publisher": "snipsnapdev",
   "icon": "snipsnap-logo-stub.png",
   "homepage": "https://marketplace.visualstudio.com/items?itemName=snipsnapdev.snipsnap-vscode",
@@ -34,8 +34,7 @@
     "test": "node ./test/runTest.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "cleanup": "npm run lint;prettier --write **/**.js",
-    "publish": "vsce publish"
+    "cleanup": "npm run lint;prettier --write **/**.js"
   },
   "devDependencies": {
     "@types/glob": "^7.1.1",
@@ -46,7 +45,6 @@
     "glob": "^7.1.5",
     "mocha": "^6.2.2",
     "typescript": "^3.6.4",
-    "vsce": "^1.71.0",
     "vscode-test": "^1.2.2"
   },
   "dependencies": {
