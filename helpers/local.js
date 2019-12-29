@@ -31,20 +31,19 @@ const commandExists = (command) =>
 
 // function that specifies error/warnings handling behaviour
 const handleErrors = (err) =>
-  console.log(err) || brandMessage('Something went wrong', 2);
+  console.debug(err) || brandMessage('Something went wrong', 2);
 
 // auto activation only if some workspace is open and
 // package.json exists
 // checkInitialActivationConditions($workspace: vscode.workspace) -> Promise
 const checkInitialActivationConditions = ($workspace) =>
-  new Promise((resolve, reject) => {
-    brandMessage('before promise', 1);
-    return ifElse(
+  new Promise((resolve, reject) =>
+    ifElse(
       $workspace.name, // workspace is open
       () => $workspace.findFiles('package.json', 1).then(resolve, reject),
       () => reject({ err: 'No workspace is opened', type: 2 })
-    )();
-  });
+    )()
+  );
 
 // takes a filename and returns Promise obj
 // (fileName: String) -> Thenable
@@ -79,8 +78,6 @@ const fetchSnippets = (reqOptions, reqPayload) =>
 
 // injects snippets file with data into current workspace's .vscode/
 const injectSnippetFile = ($workspace) => (snippetsData) => {
-  brandMessage('before writing', 1);
-  console.log(snippetsData);
   // constructing absolute path for our future file
   const wPath = Uri.file(
     `${$workspace.workspaceFolders[0].uri.fsPath}/.vscode/snipsnap.code-snippets`

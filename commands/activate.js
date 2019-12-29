@@ -13,6 +13,7 @@ const snipsnapActivate = (
   snippetFetcher = fetchSnippets
 ) => {
   // reading package.json content
+  // try/catch because vscode's thenable have no catch method
   try {
     getFileContent(workspace, packageUri)
       .then((packageContent) => {
