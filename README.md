@@ -65,13 +65,7 @@ No config required and more than that - no config even exists! You are good to g
 
 ## Usage
 
-### Using Command Palette (CMD/CTRL + Shift + P)
-
-No manual activation required as well, the extension triggers if your workspace folder contains `package.json` file and does magic on its own, but if you absolutely do, use
-
-```
-CMD + Shift + P -> Fetch the snippets
-```
+No manual activation required as well, the extension triggers if your workspace folder contains `package.json` file and does magic on its own, but if you still need to trigger it, use `Reload Window` in Command Palette.
 
 ## Settings
 
