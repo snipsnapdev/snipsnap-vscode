@@ -37,14 +37,13 @@
 
 <p align="center">
   <a href="https://drone.pixelpoint.io/snipsnapdev/snipsnap-vscode"><img src="https://img.shields.io/drone/build/snipsnapdev/snipsnap-vscode/drone?server=https%3A%2F%2Fdrone.pixelpoint.io" /></a>
-  <!-- temporary disabled due to problemds with vscode marketplace
   <a href="https://marketplace.visualstudio.com/items?itemName=snipsnapdev.snipsnap-vscode">
     <img alt="VS Code Marketplace" src="https://img.shields.io/visual-studio-marketplace/v/snipsnapdev.snipsnap-vscode"></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=snipsnapdev.snipsnap-vscode">
     <img alt="VS Code Marketplace Downloads" src="https://img.shields.io/visual-studio-marketplace/d/snipsnapdev.snipsnap-vscode"></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=snipsnapdev.snipsnap-vscode">
     <img alt="VS Code Marketplace Installs" src="https://img.shields.io/visual-studio-marketplace/i/snipsnap-vscode"></a>
-    -->
+   
 </p>
 
 ## Installation
