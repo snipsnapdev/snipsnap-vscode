@@ -1,20 +1,19 @@
 // eslint-disable-next-line import/no-unresolved
 const { commands, workspace } = require('vscode');
 const {
-  fetchSnippets,
   checkInitialActivationConditions,
   handleErrors,
   brandMessage,
 } = require('./helpers/local'); // fetchSnippets
 const snipsnapActivate = require('./commands/activate');
 
-function activate(context, snippetFetcher = fetchSnippets) {
+function activate(context) {
   checkInitialActivationConditions(workspace)
     .then((packageUri) => {
       // command registration
       const disposable = commands.registerCommand(
         'extension.snipsnap_activate',
-        () => snipsnapActivate(workspace, packageUri[0], snippetFetcher)
+        () => snipsnapActivate(workspace, packageUri[0])
       );
 
       context.subscriptions.push(disposable);

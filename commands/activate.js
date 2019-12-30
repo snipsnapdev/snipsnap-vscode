@@ -7,11 +7,7 @@ const {
 } = require('../helpers/local'); // fetchSnippets
 
 // snipsnap_activate command handler
-const snipsnapActivate = (
-  workspace,
-  packageUri,
-  snippetFetcher = fetchSnippets
-) => {
+const snipsnapActivate = (workspace, packageUri) => {
   // reading package.json content
   // try/catch because vscode's thenable have no catch method
   try {
@@ -41,7 +37,7 @@ const snipsnapActivate = (
         });
 
         // making an API call
-        return snippetFetcher(
+        return fetchSnippets(
           {
             headers: {
               'Content-Type': 'application/json',

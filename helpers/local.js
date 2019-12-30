@@ -45,12 +45,12 @@ const checkInitialActivationConditions = ($workspace) =>
     )()
   );
 
-// takes a filename and returns Promise obj
-// (fileName: String) -> Thenable
+// takes a filename and returns Promise obj with Uri
+// (fileName: String) -> Thenable<Uri>
 const getWorkspaceFile = (fileName = '') => workspace.findFiles(fileName, 1);
 
 // takes an Uri and parses content of a file
-// getFileContent(uri: Object) -> JSON
+// getFileContent($workspace: vscode.workspace, uri: Object) -> JSON
 const getFileContent = ($workspace, packageUri) =>
   $workspace.fs
     .readFile(packageUri)
