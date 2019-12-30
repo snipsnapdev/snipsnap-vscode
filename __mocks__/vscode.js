@@ -17,6 +17,12 @@ const workspace = {
       path: 'test-workspace-folder/package.json',
       scheme: 'file',
     }),
+    writeFile: jest.fn().mockResolvedValue({}),
+    readFile: jest
+      .fn()
+      .mockResolvedValue(
+        JSON.stringify({ devDependencies: { react: '17.0.1' } })
+      ),
   },
 };
 

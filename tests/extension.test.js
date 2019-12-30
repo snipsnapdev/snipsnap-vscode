@@ -45,4 +45,7 @@ describe('Extension test', () => {
     activate(vscode.context);
     expect(activate).toHaveBeenCalledTimes(1);
   });
+  test('STUB: on a happy path ext trigers command registration and subscriptions', () => {
+    expect(true).toBeTruthy();
+  });
 });
