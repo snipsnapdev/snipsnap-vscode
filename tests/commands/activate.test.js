@@ -1,3 +1,4 @@
+/* eslint-disable-next-line import/no-unresolved */
 const vscode = require('vscode');
 const snipsnapActivate = require('../../commands/activate');
 const {
@@ -16,16 +17,14 @@ jest.mock('../../helpers/local', () => ({
     .mockResolvedValue({ devDependencies: { react: '17.0.1' } }),
   fetchSnippets: jest
     .fn()
-    .mockResolvedValue(JSON.stringify({ val: 1, val: 2 })),
+    .mockResolvedValue(JSON.stringify({ val1: 1, val2: 2 })),
   injectSnippetFile: jest.fn().mockResolvedValue({}),
 }));
 
 describe('Activation command test suite', () => {
   // should be moved to test suite for getFileContent
   test('Activation error when no workspace is passed are being handled', () => {
-    expect(() =>
-      snipsnapActivate(undefined, { path: 'test/file/path', scheme: 'file' })
-    ).not.toThrow();
+    expect(() => snipsnapActivate(undefined, { path: 'test/file/path', scheme: 'file' })).not.toThrow();
     expect(handleErrors).toHaveBeenCalled();
     expect(thenableOnReject).not.toHaveBeenCalled();
   });

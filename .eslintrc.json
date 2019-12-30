@@ -16,6 +16,7 @@
   },
   "plugins": ["jest"],
   "rules": {
+    "no-unused-vars": "warn",
     "max-len": ["off", { "code": 80 }],
     "comma-dangle": "off",
     "no-console": "warn",
