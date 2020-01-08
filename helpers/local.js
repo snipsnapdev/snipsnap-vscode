@@ -1,7 +1,8 @@
 const https = require('https');
 /* eslint-disable-next-line import/no-unresolved */
 const { Uri, window, workspace } = require('vscode');
-const { ifElse } = require('./common');
+const lockfile = require('@yarnpkg/lockfile');
+const { ifElse, curry } = require('./common');
 
 // makes any message appear with brand sign
 // brandMessage(msg: String, type?: String) -> String
@@ -31,8 +32,10 @@ const commandExists = (commandsObj) => (command) =>
     );
 
 // function that specifies error/warnings handling behaviour
-const handleErrors = (err) =>
-  console.debug(err) || brandMessage('Something went wrong', 2);
+const handleErrors = (err) => {
+  throw err;
+};
+// || brandMessage('Something went wrong', 2);
 
 // auto activation only if some workspace is open and
 // package.json exists
@@ -52,11 +55,21 @@ const getWorkspaceFile = (fileName = '') => workspace.findFiles(fileName, 1);
 
 // takes an Uri and parses content of a file
 // getFileContent($workspace: vscode.workspace, uri: Object) -> JSON
-const getFileContent = ($workspace, packageUri) =>
+const getFileContent = curry(
+  ($workspace, packageUri) =>
+    console.log(packageUri) ||
+    $workspace.fs
+      .readFile(packageUri)
+      .then(Buffer.from)
+      .then(JSON.parse)
+);
+
+const getLockFileContent = curry(($workspace, lockFileUri) =>
   $workspace.fs
-    .readFile(packageUri)
-    .then(Buffer.from)
-    .then(JSON.parse);
+    .readFile(lockFileUri)
+    .then((res) => Buffer.from(res, 'utf8').toString())
+    .then(lockfile.parse)
+);
 
 // fetches snippets from remote server
 // fetchSnippets(reqOptions: Object, reqPayload: JSON) -> Promise
@@ -79,7 +92,7 @@ const fetchSnippets = (reqOptions, reqPayload) =>
 
 // injects snippets file with data into current workspace's .vscode/
 const injectSnippetFile = ($workspace) => (snippetsData) => {
-  // constructing absolute path for our future file
+  console.log(snippetsData);
   const wPath = Uri.file(
     `${$workspace.workspaceFolders[0].uri.fsPath}/.vscode/snipsnap.code-snippets`
   );
@@ -99,8 +112,30 @@ const injectSnippetFile = ($workspace) => (snippetsData) => {
   }
 };
 
-// errorThrower
-const thenableOnReject = (err) => handleErrors(err);
+// errorThrower for thenable objects
+const thenableOnReject = handleErrors;
+
+// scans for yarn.lock and package-lock.json files and returns its deps
+const getSubDependencies = ($workspace) => (currentDepsArray) =>
+  $workspace
+    .findFiles('yarn.lock', 1)
+    .then((res) => (res.length ? getLockFileContent($workspace, res[0]) : '{}'))
+    .then((yarnRes) =>
+      $workspace
+        .findFiles('package-lock.json', 1)
+        .then((res) => (res.length ? getFileContent($workspace, res[0]) : '{}'))
+        .then((pckgRes) => {
+          const yarnDeps = Object.keys(yarnRes.object || {})
+            .map((key) => key.replace(/@.*$/, ''))
+            .filter((a) => !!a);
+          const pckgDeps = Object.keys(pckgRes.dependencies || {})
+            .map((key) => key.replace(/@.*$/, ''))
+            .filter((a) => !!a);
+          return Array.from(
+            new Set([...currentDepsArray, ...yarnDeps, ...pckgDeps])
+          );
+        })
+    );
 
 module.exports = {
   getWorkspaceFile,
@@ -111,4 +146,6 @@ module.exports = {
   injectSnippetFile,
   brandMessage,
   thenableOnReject,
+  getSubDependencies,
+  getLockFileContent,
 };
