@@ -72,7 +72,7 @@ The only available configuration option is possibility to exclude certain librar
 
 Snipsnap works by gathering all deps throughout the project, even from lock files, so some of subdependencies like lodash could pollute your snippet environment and become a major frustrating factor.
 
-To ensure that no `%unwanted_library%` snippets are being fetched, you should create `.snippetsignore.json` file at the root of your project and specify all libraries you want to be ignored in a single list, e.g.
+To ensure that no `%unwanted_library%` snippets are being fetched, you should create `.snipsnapignore.json` file at the root of your project and specify all libraries you want to be ignored in a single list, e.g.
 
 ```json
 ["react", "lodash", "html"]
