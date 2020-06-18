@@ -1,7 +1,7 @@
 {
   "name": "snipsnap-vscode",
-  "displayName": "Snipsnap - Ultimate Snippet Handler",
-  "description": "Code faster with snippets for your favourite libraries",
+  "displayName": "Snipsnap - Code Snippets for Javascript libraries",
+  "description": "Code snippets for React, Gatsby, Next.js, Redux and more",
   "version": "0.2.3",
   "publisher": "snipsnapdev",
   "icon": "snipsnap-logo.png",
