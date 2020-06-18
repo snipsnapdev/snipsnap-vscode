@@ -4,7 +4,7 @@
   "description": "Code snippets for React, Gatsby, Next.js, Redux and more",
   "version": "0.2.4",
   "publisher": "snipsnapdev",
-  "icon": "snipsnap-logo.png",
+  "icon": "snipsnap-logo.jpg",
   "homepage": "https://marketplace.visualstudio.com/items?itemName=snipsnapdev.snipsnap-vscode",
   "repository": {
     "type": "git",
