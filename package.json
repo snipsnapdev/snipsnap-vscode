@@ -2,9 +2,9 @@
   "name": "snipsnap-vscode",
   "displayName": "Snipsnap - Ultimate Snippet Handler",
   "description": "Code faster with snippets for your favourite libraries",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "publisher": "snipsnapdev",
-  "icon": "snipsnap-logo-stub.png",
+  "icon": "snipsnap-logo.png",
   "homepage": "https://marketplace.visualstudio.com/items?itemName=snipsnapdev.snipsnap-vscode",
   "repository": {
     "type": "git",
