@@ -45,14 +45,14 @@
     "jest": "^24.9.0",
     "mocha": "^6.2.2",
     "typescript": "^3.6.4",
-    "vscode-test": "^1.2.2"
-  },
-  "dependencies": {
-    "@yarnpkg/lockfile": "^1.1.0",
+    "vscode-test": "^1.2.2",
     "babel-eslint": "^10.0.3",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-jest": "^23.1.1"
+  },
+  "dependencies": {
+    "@yarnpkg/lockfile": "^1.1.0"
   },
   "license": "MIT"
 }

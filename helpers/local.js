@@ -1,7 +1,9 @@
 const https = require('https');
 /* eslint-disable-next-line import/no-unresolved */
 const { Uri, window, workspace } = require('vscode');
-const lockfile = require('@yarnpkg/lockfile');
+// @TODO: for some reason even simple importing this 3rd party
+// breaks the extension
+// const lockfile = require('@yarnpkg/lockfile');
 const { ifElse, curry, uniqify, compose } = require('./common');
 
 // filters all dep names with @ or / in the name
@@ -24,18 +26,6 @@ const brandMessage = (msg, type = 0) => {
   }
 };
 
-// resolves if passed command argument already exists in vscode.commands
-// commandExists(commandsObj: vscode.commands) -> (command: String) -> Promise
-const commandExists = (commandsObj) => (command) =>
-  commandsObj
-    .getCommands()
-    .then(
-      ($commands) =>
-        new Promise((res, rej) =>
-          $commands.find((cmd) => cmd.includes(command)) ? rej() : res()
-        )
-    );
-
 // function that specifies error/warnings handling behaviour
 const handleErrors = (err) => {
   throw err;
@@ -47,11 +37,9 @@ const handleErrors = (err) => {
 // checkInitialActivationConditions($workspace: vscode.workspace) -> Promise
 const checkInitialActivationConditions = ($workspace) =>
   new Promise((resolve, reject) =>
-    ifElse(
-      $workspace.name, // workspace is open
-      () => $workspace.findFiles('package.json', 1).then(resolve, reject),
-      () => reject(Error('No workspace is open'))
-    )()
+    $workspace.name // workspace is open
+      ? $workspace.findFiles('package.json', 1).then(resolve, reject)
+      : reject(Error('No workspace is open'))
   );
 
 // takes a filename and returns Promise obj with Uri
@@ -63,10 +51,7 @@ const getWorkspaceFile = curry(($workspace, fileName = '') =>
 // takes an Uri and parses content of a file
 // getFileContent($workspace: vscode.workspace, uri: Object) -> JSON
 const getFileContent = curry(($workspace, packageUri) =>
-  $workspace.fs
-    .readFile(packageUri)
-    .then(Buffer.from)
-    .then(JSON.parse)
+  $workspace.fs.readFile(packageUri).then(Buffer.from).then(JSON.parse)
 );
 
 const getYarnLockFileContent = curry(($workspace, lockFileUri) =>
@@ -104,14 +89,12 @@ const injectSnippetFile = ($workspace) => (snippetsData) => {
     // check if there is only {} in response string
     // writing fetched snippets data to the code-snippets file
     $workspace.fs.writeFile(wPath, Buffer.from(snippetsData, 'utf8'));
-    window.showInformationMessage(
-      brandMessage(
-        `Snippets successfully fetched! You are using the latest snippets available for ${$workspace.name} project.`
-      )
+    brandMessage(
+      `Snippets successfully fetched! You are using the latest snippets available for ${$workspace.name} project.`
     );
   } else {
     brandMessage(
-      `No available snippets for libraries in ${workspace.name} project. Visit https://snipsnap.dev for more information.`
+      `No available snippets for libraries in ${$workspace.name} project. Visit https://snipsnap.dev for more information.`
     );
   }
 };
@@ -130,28 +113,26 @@ const ignoreSpecifiedLibs = curry(($workspace, depsList) =>
 
 // scans for yarn.lock and package-lock.json files and returns its deps
 const getSubDependencies = curry(($workspace, mainDepsArray) =>
+  // .findFiles('yarn.lock', 1)
+  // .then((res) =>
+  //   res.length ? getYarnLockFileContent($workspace, res[0]) : '{}'
+  // )
+  // .then((yarnRes) =>
   $workspace
-    .findFiles('yarn.lock', 1)
-    .then((res) =>
-      res.length ? getYarnLockFileContent($workspace, res[0]) : '{}'
-    )
-    .then((yarnRes) =>
-      $workspace
-        .findFiles('package-lock.json', 1)
-        .then((res) => (res.length ? getFileContent($workspace, res[0]) : '{}'))
-        .then((pckgRes) =>
-          ignoreSpecifiedLibs(
-            $workspace,
-            compose(
-              removeSubModules,
-              uniqify
-            )([
-              ...mainDepsArray,
-              ...Object.keys(yarnRes.object || {}),
-              ...Object.keys(pckgRes.dependencies || {}),
-            ])
-          )
-        )
+    .findFiles('package-lock.json', 1)
+    .then((res) => (res.length ? getFileContent($workspace, res[0]) : '{}'))
+    .then((pckgRes) =>
+      ignoreSpecifiedLibs(
+        $workspace,
+        compose(
+          removeSubModules,
+          uniqify
+        )([
+          ...mainDepsArray,
+          // ...Object.keys(yarnRes.object || {}),
+          ...Object.keys(pckgRes.dependencies || {}),
+        ])
+      )
     )
 );
 

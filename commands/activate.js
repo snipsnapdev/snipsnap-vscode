@@ -3,7 +3,6 @@ const {
   handleErrors,
   getFileContent,
   injectSnippetFile,
-  thenableOnReject,
   getSubDependencies,
 } = require('../helpers/local'); // fetchSnippets
 
@@ -19,16 +18,15 @@ const snipsnapActivate = (workspace, packageUri) => {
         const { dependencies = {}, devDependencies = {} } = packageContent;
 
         // creating list of all project libraries
-        const librariesInUse = Array.from(
+        return Array.from(
           new Set([
             ...Object.keys(dependencies),
             ...Object.keys(devDependencies),
           ])
         );
-        return librariesInUse;
-      }, thenableOnReject)
+      })
       // getting content of lock files
-      .then(getSubDependencies(workspace), thenableOnReject)
+      .then(getSubDependencies(workspace))
       .then((completeDepsList) => {
         /*
          * get ready for an API call
@@ -52,7 +50,7 @@ const snipsnapActivate = (workspace, packageUri) => {
           reqPayload
         );
       })
-      .then(injectSnippetFile(workspace), thenableOnReject);
+      .then(injectSnippetFile(workspace));
   } catch (e) {
     handleErrors(e);
   }
