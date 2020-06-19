@@ -42,7 +42,7 @@
     </tbody>
 </table>
 
-## Want to know more?
+## How to use?
 
 All information about the project presents in main Snipsnap repository.
 
