@@ -2,7 +2,7 @@
   "name": "snipsnap-vscode",
   "displayName": "Snipsnap - Code Snippets for Javascript libraries",
   "description": "Code snippets for React, Gatsby, Next.js, Redux and more",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "snipsnapdev",
   "icon": "snipsnap-logo.jpg",
   "homepage": "https://marketplace.visualstudio.com/items?itemName=snipsnapdev.snipsnap-vscode",
