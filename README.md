@@ -44,7 +44,7 @@
 
 ## How to search for a snippet?
 
-- Type your library name, if it's present in the [list](https://github.com/snipsnapdev/snipsnap) and you have it in your package.json/yarn.lock.
+- Type your library name, if it's present in the [list](https://github.com/snipsnapdev/snipsnap/tree/master/snippets/javascript) and you have it in your package.json/yarn.lock.
 - Navigate through available snippets for your library and select the one you need.
 - Use tab in order to switch cursor between highlighted parts of the snippet.
 
