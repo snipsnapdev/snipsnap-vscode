@@ -42,9 +42,13 @@
     </tbody>
 </table>
 
-## How to use?
+## How to search for a snippet?
 
-All information about the project presents in main Snipsnap repository.
+- Type your library name, if it's present in the [list](https://github.com/snipsnapdev/snipsnap) and you have it in your package.json/yarn.lock.
+- Navigate through available snippets for your library and select the one you need.
+- Use tab in order to switch cursor between highlighted parts of the snippet.
+
+For more information about the project please visit main Snipsnap repository.
 
 **[Visit documentation](https://github.com/snipsnapdev/snipsnap)**
 
