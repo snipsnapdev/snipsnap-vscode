@@ -11,6 +11,15 @@ const { ifElse, curry, uniqify, compose } = require('./common');
 const removeSubModules = (arr) =>
   arr.filter((key) => !RegExp('[@/]', 'g').test(key));
 
+// converts @angular/core into angular, @storybook/react into storybook
+const transformSubModules = (arr) => arr.map((key) => {
+  if (key[0] === '@') {
+    const slashPosition = key.indexOf('/');
+    return key.slice(1, slashPosition);
+  }
+  return key;
+});
+
 // makes any message appear with brand sign
 // brandMessage(msg: String, type?: String) -> String
 const brandMessage = (msg, type = 0) => {
@@ -124,14 +133,13 @@ const getSubDependencies = curry(($workspace, mainDepsArray) =>
     .then((pckgRes) =>
       ignoreSpecifiedLibs(
         $workspace,
-        compose(
-          removeSubModules,
-          uniqify
-        )([
-          ...mainDepsArray,
-          // ...Object.keys(yarnRes.object || {}),
-          ...Object.keys(pckgRes.dependencies || {}),
-        ])
+        uniqify(
+          transformSubModules([
+            ...mainDepsArray,
+            // ...Object.keys(yarnRes.object || {}),
+            ...Object.keys(pckgRes.dependencies || {}),
+          ]),
+        ),
       )
     )
 );
