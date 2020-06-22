@@ -36,7 +36,7 @@ const snipsnapActivate = (workspace, packageUri) => {
           language: 'javascript',
           ide: 'vscode',
           // TODO: think of a way of filtering snippetless packages, e.g. sharp
-          packages: completeDepsList,
+          packages: ['base', ...completeDepsList],
         });
 
         // making an API call
