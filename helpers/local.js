@@ -6,19 +6,11 @@ const { Uri, window, workspace } = require('vscode');
 // const lockfile = require('@yarnpkg/lockfile');
 const { ifElse, curry, uniqify, compose } = require('./common');
 
-// filters all dep names with @ or / in the name
-// removeSubModules(arr: Array) -> Array
-const removeSubModules = (arr) =>
-  arr.filter((key) => !RegExp('[@/]', 'g').test(key));
-
-// converts @angular/core into angular, @storybook/react into storybook
-const transformSubModules = (arr) => arr.map((key) => {
-  if (key[0] === '@') {
-    const slashPosition = key.indexOf('/');
-    return key.slice(1, slashPosition);
-  }
-  return key;
-});
+// strips @ and slash part from submodule name, e.g.
+// @angular/core -> angular, @storybook/react -> storybook
+// transformSubModules(arr: Array<String>) -> Array<String>
+const transformSubModules = (arr) =>
+  arr.map((key) => key.replace(/@(.+?)\/.*/g, '$1'));
 
 // makes any message appear with brand sign
 // brandMessage(msg: String, type?: String) -> String
@@ -74,6 +66,7 @@ const getYarnLockFileContent = curry(($workspace, lockFileUri) =>
 // fetchSnippets(reqOptions: Object, reqPayload: JSON) -> Promise
 const fetchSnippets = (reqOptions, reqPayload) =>
   new Promise((resolve, reject) => {
+    console.log(reqPayload);
     const req = https
       .request('https://api.snipsnap.dev/snippets', reqOptions, (response) => {
         let body = '';
@@ -133,13 +126,16 @@ const getSubDependencies = curry(($workspace, mainDepsArray) =>
     .then((pckgRes) =>
       ignoreSpecifiedLibs(
         $workspace,
-        uniqify(
+        compose(
+          uniqify,
+          transformSubModules
+        )(
           transformSubModules([
             ...mainDepsArray,
             // ...Object.keys(yarnRes.object || {}),
             ...Object.keys(pckgRes.dependencies || {}),
-          ]),
-        ),
+          ])
+        )
       )
     )
 );
