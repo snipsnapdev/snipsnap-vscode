@@ -66,7 +66,6 @@ const getYarnLockFileContent = curry(($workspace, lockFileUri) =>
 // fetchSnippets(reqOptions: Object, reqPayload: JSON) -> Promise
 const fetchSnippets = (reqOptions, reqPayload) =>
   new Promise((resolve, reject) => {
-    console.log(reqPayload);
     const req = https
       .request('https://api.snipsnap.dev/snippets', reqOptions, (response) => {
         let body = '';
