@@ -44,11 +44,16 @@
 
 ## How to search for a snippet?
 
+**Search library's snippets**
 - Type your library name, if it's present in the [list](https://github.com/snipsnapdev/snipsnap/tree/master/snippets/javascript) and you have it in your package.json/yarn.lock.
 - Navigate through available snippets for your library and select the one you need.
 - Use tab in order to switch cursor between highlighted parts of the snippet.
 
-For more information about the project please visit main Snipsnap repository.
+**Access Javascript base snippets**
+
+To access base snippets for Javascript just type keyword `base` and you will see the list of available snippets such as import, export, loops, functions etc. All base snippets you can find [there](https://github.com/snipsnapdev/snipsnap/blob/master/snippets/javascript/base/base.json).
+
+**For more information about the project please visit main Snipsnap repository.**
 
 **[Visit documentation](https://github.com/snipsnapdev/snipsnap)**
 
