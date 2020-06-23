@@ -15,7 +15,7 @@
     <img alt="VS Code Marketplace Downloads" src="https://img.shields.io/visual-studio-marketplace/d/snipsnapdev.snipsnap-vscode"></a>
 </p>
 
-<h2 align="center">Popular snippets</h2>
+<h2>Popular snippets</h2>
 <table>
   <tbody>
    <tr>
