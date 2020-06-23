@@ -29,7 +29,7 @@
       }
     ],
     "configuration": {
-      "title": "SnipSnap",
+      "title": "Snipsnap",
       "properties": {
         "snipsnap.silent": {
           "type": "boolean",
