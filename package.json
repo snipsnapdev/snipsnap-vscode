@@ -27,7 +27,17 @@
         "title": "Fetch the snippets",
         "category": "Snipsnap"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Snipsnap",
+      "properties": {
+        "snipsnap.silent": {
+          "type": "boolean",
+          "default": false,
+          "description": "Removes successfull fetching notification if enabled"
+        }
+      }
+    }
   },
   "scripts": {
     "test": "jest",

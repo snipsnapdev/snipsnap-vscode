@@ -7,7 +7,6 @@
 
 ![out](https://user-images.githubusercontent.com/2697570/73568644-23bc0180-4469-11ea-8b64-843c7a9a92d2.gif)
 
-
 <p align="center">
   <a href="https://drone.pixelpoint.io/snipsnapdev/snipsnap-vscode"><img src="https://img.shields.io/drone/build/snipsnapdev/snipsnap-vscode?server=https%3A%2F%2Fdrone.pixelpoint.io" /></a>
   <a href="https://marketplace.visualstudio.com/items?itemName=snipsnapdev.snipsnap-vscode">
@@ -50,6 +49,7 @@
 ## How to search for a snippet?
 
 **Search library's snippets**
+
 - Type your library name, if it's present in the [list](https://github.com/snipsnapdev/snipsnap/tree/master/snippets/javascript) and you have it in your package.json/yarn.lock.
 - Navigate through available snippets for your library and select the one you need.
 - Use tab in order to switch cursor between highlighted parts of the snippet.
@@ -84,9 +84,21 @@ No manual activation required as well, the extension triggers if your workspace 
 
 ## Settings
 
-The only available configuration option is possibility to exclude certain libraries from snippets request.
+### Silent mode
 
-Snipsnap works by gathering all deps throughout the project, even from lock files, so some of subdependencies like lodash could pollute your snippet environment and become a major frustrating factor.
+You can turn the successful snipet fetching notification off by specifying `snipsnap.silent` property's value to `true` in your VSCode's `settings.json`:
+
+```json
+// settings.json
+{
+  // other user settings
+  "snipsnap.silent": true
+}
+```
+
+### Ignore libraries
+
+Snipsnap works by gathering all deps throughout the project, even from lock files, so some of subdependencies like lodash could pollute your snippets environment and become a major frustrating factor.
 
 To ensure that no `%unwanted_library%` snippets are being fetched, you should create `.snipsnapignore.json` file at the root of your project and specify all libraries you want to be ignored in a single list, e.g.
 
