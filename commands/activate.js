@@ -26,6 +26,7 @@ const snipsnapActivate = (workspace, packageUri) => {
         /*
          * get ready for an API call
          */
+        console.debug('req payload will be:', completeDepsList);
         const reqPayload = JSON.stringify({
           // TODO: think of a way of handling lang other than js
           language: 'javascript',

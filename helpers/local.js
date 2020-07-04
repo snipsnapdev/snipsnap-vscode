@@ -130,12 +130,16 @@ const getSubDependencies = curry(($workspace, mainDepsArray) =>
       $workspace
         .findFiles('package-lock.json', 1)
         .then((res) => (res.length ? getFileContent($workspace, res[0]) : { dependencies: [] }))
-        .then((pckgRes) =>
-          ignoreSpecifiedLibs(
+        .then((pckgRes) => {
+          // eslint-disable-next-line no-console
+          console.debug('yarn.lock packages:', yarnRes);
+          // eslint-disable-next-line no-console
+          console.debug('package-lock packages:', pckgRes);
+          return ignoreSpecifiedLibs(
             $workspace,
             compose(uniqify, transformSubModules)([...mainDepsArray, ...yarnRes, ...Object.keys(pckgRes.dependencies)])
-          )
-        )
+          );
+        })
     )
 );
 
