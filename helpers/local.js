@@ -1,15 +1,19 @@
 const https = require('https');
 /* eslint-disable-next-line import/no-unresolved */
 const { Uri, window } = require('vscode');
-// @TODO: for some reason even simple importing this 3rd party
-// breaks the extension
-// const lockfile = require('@yarnpkg/lockfile');
 const { curry, uniqify, compose } = require('./common');
 
 // strips @ and slash part from submodule name, e.g.
 // @angular/core -> angular, @storybook/react -> storybook
 // transformSubModules(arr: Array<String>) -> Array<String>
-const transformSubModules = (arr) => arr.map((key) => key.replace(/@(.+?)\/.*/g, '$1'));
+const transformSubModules = (arr) => arr.map((key) => key.replace(/^@?(.+?)([/@:].+)/, '$1'));
+
+const parseYarnLock = (content) =>
+  content
+    .replace(/(\n)/g, '#')
+    .split('##')
+    .slice(2)
+    .map((entry) => entry.replace(/["#]/g, '').replace(/^(.+?):.*/, '$1'));
 
 // makes any message appear with a brand sign
 // type 1: warning message
@@ -59,12 +63,12 @@ const getFileContent = curry(($workspace, packageUri) =>
   $workspace.fs.readFile(packageUri).then(Buffer.from).then(JSON.parse)
 );
 
-// const getYarnLockFileContent = curry(($workspace, lockFileUri) =>
-//   $workspace.fs
-//     .readFile(lockFileUri)
-//     .then((res) => Buffer.from(res, 'utf8').toString())
-//     .then(lockfile.parse)
-// );
+const getYarnLockFileContent = curry(($workspace, lockFileUri) =>
+  $workspace.fs
+    .readFile(lockFileUri)
+    .then((res) => Buffer.from(res, 'utf8').toString())
+    .then(parseYarnLock)
+);
 
 // fetches snippets from remote server
 // fetchSnippets(reqOptions: Object, reqPayload: JSON) -> Promise
@@ -119,26 +123,19 @@ const ignoreSpecifiedLibs = curry(($workspace, depsList) =>
 
 // scans for yarn.lock and package-lock.json files and returns its deps
 const getSubDependencies = curry(($workspace, mainDepsArray) =>
-  // .findFiles('yarn.lock', 1)
-  // .then((res) =>
-  //   res.length ? getYarnLockFileContent($workspace, res[0]) : '{}'
-  // )
-  // .then((yarnRes) =>
   $workspace
-    .findFiles('package-lock.json', 1)
-    .then((res) => (res.length ? getFileContent($workspace, res[0]) : '{}'))
-    .then((pckgRes) =>
-      ignoreSpecifiedLibs(
-        $workspace,
-        compose(
-          uniqify,
-          transformSubModules
-        )([
-          ...mainDepsArray,
-          // ...Object.keys(yarnRes.object || {}),
-          ...Object.keys(pckgRes.dependencies || {}),
-        ])
-      )
+    .findFiles('yarn.lock', 1)
+    .then((res) => (res.length ? getYarnLockFileContent($workspace, res[0]) : []))
+    .then((yarnRes) =>
+      $workspace
+        .findFiles('package-lock.json', 1)
+        .then((res) => (res.length ? getFileContent($workspace, res[0]) : { dependencies: [] }))
+        .then((pckgRes) =>
+          ignoreSpecifiedLibs(
+            $workspace,
+            compose(uniqify, transformSubModules)([...mainDepsArray, ...yarnRes, ...Object.keys(pckgRes.dependencies)])
+          )
+        )
     )
 );
 
@@ -152,5 +149,5 @@ module.exports = {
   brandMessage,
   thenableOnReject,
   getSubDependencies,
-  // getYarnLockFileContent,
+  getYarnLockFileContent,
 };
