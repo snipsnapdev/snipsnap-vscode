@@ -68,9 +68,9 @@ To access base snippets for Javascript just type keyword `base` and you will see
 
 ## Installation
 
-Install through VS Code extensions. Search for `Snipsnap - Snippets Handler`
+Install through VS Code extensions. Search for `Snipsnap-vscode`
 
-[Visual Studio Code Market Place: Snipsnap - snippets handler](https://marketplace.visualstudio.com/items?itemName=snipsnapdev.snippsnap-vscode)
+[Visual Studio Code Market Place: Snipsnap - snippets handler](https://marketplace.visualstudio.com/items?itemName=snipsnapdev.snipsnap-vscode)
 
 Can also be installed in VS Code: Launch VS Code Quick Open (Ctrl+P), paste the following command, and press enter.
 

@@ -34,7 +34,7 @@
         "snipsnap.silent": {
           "type": "boolean",
           "default": false,
-          "description": "Removes successfull fetching notification if enabled"
+          "description": "Removes successful fetching notification if enabled"
         }
       }
     }
