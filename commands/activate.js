@@ -4,7 +4,7 @@ const {
   getFileContent,
   injectSnippetFile,
   getSubDependencies,
-} = require('../helpers/local'); // fetchSnippets
+} = require('../helpers/local');
 
 // snipsnap_activate command handler
 const snipsnapActivate = (workspace, packageUri) => {
@@ -18,12 +18,7 @@ const snipsnapActivate = (workspace, packageUri) => {
         const { dependencies = {}, devDependencies = {} } = packageContent;
 
         // creating list of all project libraries
-        return Array.from(
-          new Set([
-            ...Object.keys(dependencies),
-            ...Object.keys(devDependencies),
-          ])
-        );
+        return Array.from(new Set([...Object.keys(dependencies), ...Object.keys(devDependencies)]));
       })
       // getting content of lock files
       .then(getSubDependencies(workspace))
@@ -31,6 +26,7 @@ const snipsnapActivate = (workspace, packageUri) => {
         /*
          * get ready for an API call
          */
+        console.debug('req payload will be:', completeDepsList);
         const reqPayload = JSON.stringify({
           // TODO: think of a way of handling lang other than js
           language: 'javascript',
