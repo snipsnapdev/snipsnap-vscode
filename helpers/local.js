@@ -10,7 +10,7 @@ const transformSubModules = (arr) => arr.map((key) => key.replace(/^@?(.+?)([/@:
 
 const parseYarnLock = (content) =>
   content
-    .replace(/(\n)/g, '#')
+    .replace(/(\r?\n)/g, '#')
     .split('##')
     .slice(2)
     .map((entry) => entry.replace(/["#]/g, '').replace(/^(.+?):.*/, '$1'));
