@@ -8,12 +8,11 @@ const { curry, uniqify, compose } = require('./common');
 // transformSubModules(arr: Array<String>) -> Array<String>
 const transformSubModules = (arr) => arr.map((key) => key.replace(/^@?(.+?)([/@:].+)/, '$1'));
 
-const parseYarnLock = (content) =>
-  content
-    .replace(/(\r?\n)/g, '#')
-    .split('##')
-    .slice(2)
-    .map((entry) => entry.replace(/["#]/g, '').replace(/^(.+?):.*/, '$1'));
+const parseYarnLock = (content) => content
+  .replace(/(\r?\n)/g, '#')
+  .split('##')
+  .slice(2)
+  .map((entry) => entry.replace(/["#]/g, '').replace(/^(.+?):.*/, '$1'));
 
 // makes any message appear with a brand sign
 // type 1: warning message
@@ -42,12 +41,9 @@ const handleErrors = (err) => {
 // auto activation only if some workspace is open and
 // package.json exists
 // checkInitialActivationConditions($workspace: vscode.workspace) -> Promise
-const checkInitialActivationConditions = ($workspace) =>
-  new Promise((resolve, reject) =>
-    $workspace.name // workspace is open
-      ? $workspace.findFiles('package.json', 1).then(resolve, reject)
-      : reject(Error('No workspace is open'))
-  );
+const checkInitialActivationConditions = ($workspace) => new Promise((resolve, reject) => ($workspace.name // workspace is open
+  ? $workspace.findFiles('package.json', 1).then(resolve, reject)
+  : reject(Error('No workspace is open'))));
 
 // takes a workspace and a filename and returns Promise obj with Uri
 // ($workspace: vscode.workspace) -> (fileName: String) -> Thenable<Uri>
@@ -59,35 +55,30 @@ const getExtensionConfig = ($workspace) => $workspace.getConfiguration('snipsnap
 
 // takes an Uri and parses content of a file
 // getFileContent($workspace: vscode.workspace, uri: Object) -> JSON
-const getFileContent = curry(($workspace, packageUri) =>
-  $workspace.fs.readFile(packageUri).then(Buffer.from).then(JSON.parse)
-);
+const getFileContent = curry(($workspace, packageUri) => $workspace.fs.readFile(packageUri).then(Buffer.from).then(JSON.parse));
 
-const getYarnLockFileContent = curry(($workspace, lockFileUri) =>
-  $workspace.fs
-    .readFile(lockFileUri)
-    .then((res) => Buffer.from(res, 'utf8').toString())
-    .then(parseYarnLock)
-);
+const getYarnLockFileContent = curry(($workspace, lockFileUri) => $workspace.fs
+  .readFile(lockFileUri)
+  .then((res) => Buffer.from(res, 'utf8').toString())
+  .then(parseYarnLock));
 
 // fetches snippets from remote server
 // fetchSnippets(reqOptions: Object, reqPayload: JSON) -> Promise
-const fetchSnippets = (reqOptions, reqPayload) =>
-  new Promise((resolve, reject) => {
-    const req = https
-      .request('https://api.snipsnap.dev/snippets', reqOptions, (response) => {
-        let body = '';
-        response.on('data', (d) => {
-          body += d;
-        });
-        response.on('end', () => {
-          resolve(body);
-        });
-      })
-      .on('error', (e) => reject(e));
-    req.write(reqPayload);
-    req.end();
-  });
+const fetchSnippets = (reqOptions, reqPayload) => new Promise((resolve, reject) => {
+  const req = https
+    .request('https://api.snipsnap.dev/snippets', reqOptions, (response) => {
+      let body = '';
+      response.on('data', (d) => {
+        body += d;
+      });
+      response.on('end', () => {
+        resolve(body);
+      });
+    })
+    .on('error', (e) => reject(e));
+  req.write(reqPayload);
+  req.end();
+});
 
 // injects snippets file with data into current workspace's .vscode/
 const injectSnippetFile = ($workspace) => (snippetsData) => {
@@ -112,36 +103,30 @@ const thenableOnReject = (e) => {
   throw e;
 };
 
-const ignoreSpecifiedLibs = curry(($workspace, depsList) =>
-  getWorkspaceFile($workspace, '.snipsnapignore.json')
-    .then((uri) => getFileContent($workspace, uri[0]))
-    // filtering out to-be-ignored-files
-    .then((res) => depsList.filter((dep) => !res.includes(dep)))
-    // return initial deps list anyway
-    .catch(() => depsList)
-);
+const ignoreSpecifiedLibs = curry(($workspace, depsList) => getWorkspaceFile($workspace, '.snipsnapignore.json')
+  .then((uri) => getFileContent($workspace, uri[0]))
+// filtering out to-be-ignored-files
+  .then((res) => depsList.filter((dep) => !res.includes(dep)))
+// return initial deps list anyway
+  .catch(() => depsList));
 
 // scans for yarn.lock and package-lock.json files and returns its deps
-const getSubDependencies = curry(($workspace, mainDepsArray) =>
-  $workspace
-    .findFiles('yarn.lock', 1)
-    .then((res) => (res.length ? getYarnLockFileContent($workspace, res[0]) : []))
-    .then((yarnRes) =>
-      $workspace
-        .findFiles('package-lock.json', 1)
-        .then((res) => (res.length ? getFileContent($workspace, res[0]) : { dependencies: [] }))
-        .then((pckgRes) => {
-          // eslint-disable-next-line no-console
-          console.debug('yarn.lock packages:', yarnRes);
-          // eslint-disable-next-line no-console
-          console.debug('package-lock packages:', pckgRes);
-          return ignoreSpecifiedLibs(
-            $workspace,
-            compose(uniqify, transformSubModules)([...mainDepsArray, ...yarnRes, ...Object.keys(pckgRes.dependencies)])
-          );
-        })
-    )
-);
+const getSubDependencies = curry(($workspace, mainDepsArray) => $workspace
+  .findFiles('yarn.lock', 1)
+  .then((res) => (res.length ? getYarnLockFileContent($workspace, res[0]) : []))
+  .then((yarnRes) => $workspace
+    .findFiles('package-lock.json', 1)
+    .then((res) => (res.length ? getFileContent($workspace, res[0]) : { dependencies: [] }))
+    .then((pckgRes) => {
+      // eslint-disable-next-line no-console
+      console.debug('yarn.lock packages:', yarnRes);
+      // eslint-disable-next-line no-console
+      console.debug('package-lock packages:', pckgRes);
+      return ignoreSpecifiedLibs(
+        $workspace,
+        compose(uniqify, transformSubModules)([...mainDepsArray, ...yarnRes, ...Object.keys(pckgRes.dependencies)])
+      );
+    })));
 
 module.exports = {
   getWorkspaceFile,
