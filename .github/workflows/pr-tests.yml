@@ -5,7 +5,16 @@ on:
     branches: [ $default-branch ]
 
 jobs:
-  test:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: npm ci
+    - name: Run ESLint
+      run: npm run lint
+
+  tests:
     runs-on: ubuntu-latest
 
     strategy:
@@ -14,7 +23,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Test with node-${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
