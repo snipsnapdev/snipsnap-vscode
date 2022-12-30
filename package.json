@@ -53,7 +53,7 @@
     "eslint": "^6.6.0",
     "glob": "^7.1.5",
     "jest": "^24.9.0",
-    "mocha": "^6.2.2",
+    "mocha": "^10.2.0",
     "typescript": "^3.6.4",
     "vscode-test": "^1.2.2",
     "babel-eslint": "^10.0.3",
